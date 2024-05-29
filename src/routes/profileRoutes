@@ -1,0 +1,16 @@
+import express from 'express'
+import multer from 'multer'
+import { jwtAuth,admin } from '../middlewares/auth.js'
+import { getProfile , getUserProfile, listPublicProfiles, updateProfile } from '../controllers/profileControlller.js'
+import { upload } from '../middlewares/fileUpload.middleware.js'
+
+const router=express.Router();
+
+router.get('/me',jwtAuth,getProfile);
+router.put('/update/me',jwtAuth,upload.single('profilePicture'),updateProfile)
+router.get('/public',listPublicProfiles);
+router.get('/:id',jwtAuth,getUserProfile);
+router.get('/admin/:id',jwtAuth,admin,getUserProfile);
+
+
+export default router;

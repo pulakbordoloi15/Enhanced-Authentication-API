@@ -1,0 +1,191 @@
+{
+    "swagger":"2.0",
+    "info":{
+        "version":"1.0.0",
+        "description":"API for Enhanced Authentication",
+        "title":"Enhanced Authentication API"
+    },
+    "host":"localhost:3200",
+    "securityDefinitions":{
+        "JWT":{
+            "in":"header",
+            "name":"Authorization",
+            "type": "apiKey"
+        }
+    },
+    "paths":{
+        "/api/auth/register": {
+            "post":{
+                "tags": ["Users"],
+                "summary":"Register",
+                "description":"User Registration to get token",
+                "parameters":[
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "description":"User Credentials",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name":{
+                                    "type":"string"
+                                },
+                                "email":{
+                                    "type": "string"
+                                },
+                                "password":{
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses":{
+                    "200": {
+                        "description":"OK"
+                    },
+                    "400": {
+                        "description": "Incorrect Credentials"
+                    }
+                }
+            }
+        },
+        "/api/auth/login": {
+            "post":{
+                "tags": ["Users"],
+                "summary":"Login",
+                "description":"User Login to get token",
+                "parameters":[
+                    {
+                        "in":"body",
+                        "name":"body",
+                        "description":"User Credentials",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "email":{
+                                    "type": "string"
+                                },
+                                "password":{
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses":{
+                    "200": {
+                        "description":"OK"
+                    },
+                    "400": {
+                        "description": "Incorrect Credentials"
+                    }
+                }
+            }
+        },
+        "/api/profiles/me":{
+            
+                "get":{
+                    "tags": ["Profile"],
+                    "summary":"Get User Profile",
+                    "description":"Get User Profile",
+                    "security":[{"JWT": {} }],
+                    "responses":{
+                        "200": {
+                            "description":"OK"
+                        },
+                        "401": {
+                            "description": "Unauthorized"
+                        }
+                    }
+                }
+            },
+            "/api/profiles/update/me":{
+                "put":{
+                    "tags": ["Profile"],
+                    "summary":"Update User Profile",
+                    "description":"Update User Profile",
+                    "security":[{"JWT": {} }],
+                    "parameters":[
+                        {
+                            "in":"body",
+                            "name":"body",
+                            "description":"User Credentials",
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "bio":{
+                                        "type": "string"
+                                    },
+                                    "phone":{
+                                        "type": "string"
+                                    },
+                                    "isPublic":{
+                                        "type": "Boolean"
+                                    }
+                                }
+                            }
+                        }
+                    ],
+                    "responses":{
+                        "200": {
+                            "description":"OK"
+                        },
+                        "400": {
+                            "description": "Incorrect Credentials"
+                        }
+                    }
+                }
+            },
+            "/api/profiles/public":{
+                "get":{
+                    "tags": ["Profile"],
+                    "summary":"Get All User Profile details",
+                    "description":"Get All User Profile details",
+                    "security":[{"JWT": {} }],
+                    "responses":{
+                        "200": {
+                            "description":"OK"
+                        },
+                        "401": {
+                            "description": "Unauthorized"
+                        }
+                    }
+                }
+            },
+            "/api/profiles/{id}":{
+                "get":{
+                    "tags": ["Normal User"],
+                    "summary":"Get a User's Profile by ID (as normal user)",
+                    "description":"Get a User's Profile by ID (as normal user)",
+                    "security":[{"JWT": {} }],
+                    "responses":{
+                        "200": {
+                            "description":"OK"
+                        },
+                        "401": {
+                            "description": "Unauthorized"
+                        }
+                    }
+                }
+            },
+            "api/profiles/admin/{id}":{
+                "get":{
+                    "tags": ["Admin"],
+                    "summary":"Get a User's Profile by ID (as Admin)",
+                    "description":"Get a User's Profile by ID (as Admin)",
+                    "security":[{"JWT": {} }],
+                    "responses":{
+                        "200": {
+                            "description":"OK"
+                        },
+                        "401": {
+                            "description": "Unauthorized"
+                        }
+                    }
+                }
+            }
+        }
+        
+
+    }
